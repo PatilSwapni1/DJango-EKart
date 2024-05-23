@@ -1,0 +1,29 @@
+{%extends 'base.html'%}
+{%block title%}View Order{%endblock%}
+{%block body%}
+<div class="row m-2">
+    <div class="col-md-9 p-2">
+      <h4 class ="bg-danger text-white p-2">My Orders</h4>
+      {% for x in products %}
+      <div class="row">
+        <div class="col-md-4">
+          <img
+            src="{{x.product.image.url}}"
+            class="card-img-top"
+            alt="product"
+            height="300px"
+          />
+        </div>
+        <div class="col-md-8">
+          <p><b>product Name: </b>{{x.product.prod_name}}</p>
+          <p><b>Product Category: </b>{{x.product.category}}</p>
+          <p><b>Price: </b>{{x.product.price}}</p>
+          <p><b>description: </b>{{x.product.desc}}</p>
+          <p><b>Quantity :</b>{{x.quantity}}</p>
+          <a href="{%url 'addCart' x.product.product_id %}"><button class="btn btn-danger">Repeat order</button></a>
+              
+          
+        </div>
+      </div>
+{%endfor%}
+{%endblock%}

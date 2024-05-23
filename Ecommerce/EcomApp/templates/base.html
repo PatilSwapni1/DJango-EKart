@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}{% endblock %}</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  </head>
+  <body>
+    <div class="container-fluid">
+      {% comment %} Header section {% endcomment %}
+      <div class="row">
+        <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="#">Ekart</a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="/"
+                    >Home</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/viewCart">ViewCart</a>
+                </li>
+                {%if user.is_authenticated%}
+                <li class="nav-item">
+                  <a class="nav-link" href="/logout">Logout</a>
+                </li>
+                {%else%}
+                <li class="nav-item">
+                  <a class="nav-link" href="/register">SignUp</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/login">SignIn</a>
+                </li>
+                {%endif%}
+                <li class="nav-item">
+                  {% if user.is_authenticated%}
+                  <a class="nav-link active" >Welcome {{user.username}}</a>
+                  {%else%}
+                  <a class="nav-link" >Welcome Guest</a>
+                  {% endif %}
+                </li>
+              </ul>
+              <form class="d-flex" method="post" action="{%url 'search'%}">
+                {% csrf_token %}
+                <input
+                  class="form-control me-2" type="search" placeholder="Search" name="q"/>
+                <button class="btn btn-outline-success" type="submit">
+                  Search
+                </button>
+              </form>&nbsp;&nbsp;
+              <a href="{%url 'viewCart'%}" ><h3 style="display:inline-block;"><i class="bi bi-cart2"></i>
+              {% if user.is_authenticated%}
+              <span class="position-abosolute top-40 start-100 translate-middle badge rounded-pill bg-danger">
+                {{items}}
+              </span>
+              {% endif %}
+            </h3></a>
+            </div>
+          </div>
+        </nav>
+      </div>
+    
+
+    <!---Body-->
+    {% if messages %}
+                      {% for message in messages %}
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                              {{ message }}
+                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                      {% endfor %}
+                    {% endif %} 
+
+                    
+     {% block body %}
+
+
+     {% endblock %} 
+    <!--footer-->
+    <div class="row">
+      <div class="col-md-4"><h4>Address</h4>
+    <hr>
+    19A,Sunshine building,<br>
+    Lokhandwala Complex Rd, <br>
+    SV Patel Nagar,<br>
+     Andheri West, Mumbai,<br>
+     Maharashtra 400061
+
+</div>
+      <div class="col-md-4">Quick Links
+        <hr>
+        <a class="anchor" href="">Home</a><br>
+        <a class="anchor" href="">About us</a><br>
+        <a class="anchor" href="">Contact us</a><br>
+
+    </div>
+      <div class="col-md-4">Connect
+        <hr>
+        <h3><a href=""><i class="bi bi-whatsapp"></i></a></h3>
+        <h3><a href=""><i class="bi bi-instagram"></i></a></h3>
+        <h3><a href=""><i class="bi bi-twitter"></i></a></h3>
+        <h3><a href="mailto:someone@gmail.com"><i class="bi bi-envelope"></i></a></h3>
+      </div>
+    </div>
+</div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

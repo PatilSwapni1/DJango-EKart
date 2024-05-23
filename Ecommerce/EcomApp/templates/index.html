@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %} Ekart|Home {%  endblock %}
+{% block body%}
+<div class="row">
+    <div class="col-md-3">
+        <h5>Filter by Category</h5>
+        <hr>
+        <p><a href="/">All</a></p>
+        <p><a href="{%url 'mobileView' %}">Mobile</a></p>
+        <p><a href="{%url 'laptopView' %}">Laptop</a></p>
+        <p><a href="{%url 'tvView' %}">Tv</a></p>
+
+        <h5>Filter by Price</h5>
+        <hr>
+        <form method="post" action="{%url 'rangeView'%}">
+          {% csrf_token %}
+            <div class="mb-3">
+              <label for="min" class="form-label">Min</label>
+              <input type="number" class="form-control" id="min" placeholder="Minimum" name="min">
+              
+            </div>
+            <div class="mb-3">
+              <label for="max" class="form-label">Max</label>
+              <input type="number" class="form-control" id="max" placeholder="Maximum" name="max">
+            </div>
+            <h5>{{msg}}</h5>
+            <button type="submit" class="btn btn-success">Submit</button>
+          </form>
+
+        <h5>Sort by Price</h5>
+        <hr>
+        <p><a href="{%url 'sortAsc' %}?sort=high_to_low">High to Low</a></p>
+        <p><a href="{%url 'sortAsc' %}?sort=low_to_high">Low to High</a></p>
+
+    </div>
+    <div class="col-md-9 mt-2">
+        <div class="row  mt-2">
+          <!--product1-->
+          {% for x in products %}
+
+            <div class="col-md-4 mb-3">
+            <div class="card" style="width: 18rem;">
+                <img src="{{x.image.url}}" class="card-img-top" alt="product" height="200px" width="250px">
+                <div class="card-body">
+                  <h5 class="card-title">{{x.prod_name}}</h5>
+                  <p class="card-text">Price: ₹{{x.price}}</p>
+                  <a href="{%url 'addCart' x.product_id %}" class="btn btn-danger">Add to cart</a>
+                  <a href="{% url 'prodSpecific' x.pk %}" class="btn btn-primary">View</a>
+                </div>
+              </div>
+            </div>
+            {% empty%}
+            <h3>Products not available</h3>
+            {% endfor %}
+            
+            
+
+            
+            
+          
+
+        </div>
+
+
+
+
+
+
+    </div>
+</div>
+{% endblock %}

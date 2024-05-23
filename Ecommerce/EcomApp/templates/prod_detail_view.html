@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title%}Products deatil{%endblock%}
+{%block body%}
+<div class="row">
+<div class="col-md-4 mb-4">
+  
+        <img src="{{object.image.url}}" class="card-img-top" alt="product" height="300px" width="350px">
+</div>     
+<div class="col-md-8">       
+        
+        <div class="card-body">
+          <h5 class="card-title">{{object.prod_name}}</h5>
+          <p class="card-text">{{object.desc}}</p>
+          <p class="card-text">{{object.price}}</p>
+          <a href="{%url 'addCart' object.product_id %}" class="btn btn-danger">Add to cart</a>
+          <a href="{% url 'buy' object.product_id %}" class="btn btn-primary">Buy Now</a>
+        </div>
+      
+</div>
+</div>
+{%endblock%}
